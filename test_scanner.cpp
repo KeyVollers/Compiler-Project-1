@@ -1,6 +1,14 @@
 #include <iostream>
+#include <sstream>
 
 #include "scanner.hpp"
+
+std::ostream& operator<<(std::ostream& os, const Loc& loc) {
+    return os
+        << loc.line << ":"
+        << loc.col << "|"
+        << loc.pos;
+}
 
 const char *to_string(TokenType tt) {
     switch(tt) {
@@ -43,13 +51,14 @@ const char *to_string(TokenType tt) {
     }
 }
 
+std::ostream& operator<<(std::ostream& os, const TokenType& tt) {
+    return os << to_string(tt);
+}
+
 void print_token(const Token &tok) {
     std::cout << "Token("
-        << to_string(tok.type) << ", "
-        << "("
-            << tok.loc.line << ":"
-            << tok.loc.col << "|"
-            << tok.loc.pos << "), "
+        << tok.type << ", "
+        << "(" << tok.loc << "), "
         << tok.value << ")" << std::endl;
 }
 

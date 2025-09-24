@@ -115,14 +115,11 @@ Token Scanner::next_token() {
         } while(isrest(cur[0]));
 
         // Check for keywords using an O(log n) algorithm
-        // not and or true false if then else fi while do od skip
 
         #define TREE(kw, tt, L, R) \
             do { \
                 int dir = strncmp(start, kw, len); \
-                printf("Test %d, %s | %d\n", len, kw, dir); \
                 if(dir == 0) { \
-                    advance(len); \
                     return Token { tokloc, len, TokenType::tt }; \
                 } \
                 else if(dir < 0) { L; } \
@@ -138,7 +135,7 @@ Token Scanner::next_token() {
                     LEAF("else", KW_ELSE)
                 ),
                 TREE("fi", KW_FI,
-                    LEAF("if", KW_IF), {}
+                    {}, LEAF("if", KW_IF)
                 )
             ),
             TREE("then", KW_THEN,
@@ -147,7 +144,7 @@ Token Scanner::next_token() {
                     LEAF("skip", KW_SKIP)
                 ),
                 TREE("true", KW_TRUE,
-                    LEAF("while", KW_WHILE), {}
+                    {}, LEAF("while", KW_WHILE)
                 )
             )
         );
