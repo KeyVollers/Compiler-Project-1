@@ -1,13 +1,14 @@
 CC = g++
 LEVEL = -g
 CFLAGS = -Wall -Wextra -Werror -fno-exceptions -fno-rtti $(LEVEL)
+OUT = out
 
-test_scanner: test_scanner.cpp scanner.cpp
+$(OUT)/test_scanner: test_scanner.cpp scanner.cpp
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -f test_scanner
+	rm -f $(OUT)/test_scanner
 
-all: test_scanner
+all: $(OUT)/test_scanner
 
 .PHONY: clean all
